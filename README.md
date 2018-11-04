@@ -7,11 +7,21 @@ Also ships with a Python API, as a bonus.
 ## Install
 
 ```
-$ pip install eopkg3p
+$ pip3 install eopkg3p
 ```
+
+Or, head over to [releases](https://github.com/pycampers/eopkg3p/releases) and download latest `eopkg3p` binary.
 
 Python 3.6+ only    
 MIT Lisence
+
+## Dependenices
+
+- `python3.6`
+- `git`
+- `eopkg`
+- `pkexec`
+
 
 ## Usage
 
