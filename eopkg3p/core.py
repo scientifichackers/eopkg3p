@@ -1,12 +1,19 @@
-import shutil
 import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, Tuple
 from typing import Generator
 
-from eopkg3p.consts import EOPKG, CACHE_DIR
-from eopkg3p.consts import REPO_DIR, GIT, REPO_URL, PSPEC_FILENAME, BUILD_DIR, PKEXEC
+from .consts import (
+    REPO_DIR,
+    GIT,
+    REPO_URL,
+    PSPEC_FILENAME,
+    BUILD_DIR,
+    PKEXEC,
+    EOPKG,
+    CACHE_DIR,
+)
 
 if not CACHE_DIR.exists():
     CACHE_DIR.mkdir(parents=True)
