@@ -9,7 +9,7 @@ Also ships with a Python API, as a bonus.
 Just download, make executable and run!
 
 ```
-$ wget https://github.com/pycampers/eopkg3p/releases/download/v0.0.2/eopkg3p
+$ wget https://github.com/pycampers/eopkg3p/releases/download/v0.0.3/eopkg3p
 $ chmod +x ./eopkg3p
 $ ./eopkg3p
 ```
