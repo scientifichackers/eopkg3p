@@ -19,7 +19,7 @@ EOPKG = _find_executable("eopkg")
 GIT = _find_executable("git")
 PKEXEC = _find_executable("pkexec")
 
-REPO_URL = "https://github.com/solus-project/3rd-party.git"
+REPO_URL = "https://github.com/getsolus/3rd-party.git"
 PSPEC_FILENAME = "pspec.xml"
 
 CACHE_DIR = Path.home() / ".cache" / "eopkg3p"

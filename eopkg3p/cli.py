@@ -6,6 +6,7 @@ import click
 from crayons import yellow, green, red, cyan
 
 from . import core
+from .__version__ import __version__
 from .consts import REPO_DIR, REPO_URL, EOPKG, PKEXEC, CACHE_DIR
 
 
@@ -155,9 +156,13 @@ class AliasedGroup(click.Group):
 
 @click.command(cls=AliasedGroup, invoke_without_command=True, no_args_is_help=True)
 @click.option("--cache", help="Output the cache dir.", is_flag=True)
-def cli(cache):
+@click.option("--version", help="Output version information.", is_flag=True)
+def cli(cache, version):
     if cache:
         print(CACHE_DIR)
+        exit()
+    if version:
+        print(__version__)
         exit()
     if not core.check_local_repo():
         print(red("Local repo not found!", bold=True))
