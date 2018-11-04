@@ -16,6 +16,8 @@ $ ./eopkg3p
 
 [Releases](https://github.com/pycampers/eopkg3p/releases)
 
+---
+
 Or, install using `pip`
 
 ```
