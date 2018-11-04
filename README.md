@@ -7,7 +7,7 @@ Also ships with a Python API, as a bonus.
 ## Install
 
 ```
-$ pip install eopkg3p
+$ pip3 install eopkg3p
 ```
 
 Python 3.6+ only    
