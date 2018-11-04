@@ -73,7 +73,7 @@ def list_available():
     des_width = shutil.get_terminal_size().columns - des_indent
 
     for name, pspec in available.items():
-        head = f"%-{maxsize}s" % name
+        head = name.rjust(maxsize)
         if name in installed:
             head = green(head)
         des = core.get_description(pspec)
@@ -93,7 +93,7 @@ def list_installed():
     des_width = shutil.get_terminal_size().columns - des_indent
 
     for name, pspec in installed.items():
-        head = f"%-{maxsize}s" % name
+        head = name.rjust(maxsize)
         des = core.get_description(pspec)
         des = indent(fill(des, des_width), " " * des_indent)
 
