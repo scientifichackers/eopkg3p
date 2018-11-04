@@ -17,7 +17,7 @@ MIT Lisence
 
 ## Dependenices
 
-- Python 3.6+
+- `python` (3.6+)
 - `git`
 - `eopkg`
 - `pkexec`
