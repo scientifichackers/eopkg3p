@@ -13,6 +13,8 @@ $ pip3 install eopkg3p
 Python 3.6+ only    
 MIT Lisence
 
+Or, head over to [releases](https://github.com/pycampers/eopkg3p/releases) and download latest `eopkg3p` binary.
+
 ## Usage
 
 If you know `eopkg`, you _already_ know `eopkg3p`.
