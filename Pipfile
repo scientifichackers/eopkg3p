@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+click = "*"
+crayons = "*"
+
+[dev-packages]
+yappi = "*"
+mypy = "*"
+twine = "*"
+"eopkg3p" = {editable = true, path = "."}
+
+[requires]
+python_version = "3.6"
