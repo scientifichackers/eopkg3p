@@ -12,6 +12,7 @@ yappi = "*"
 mypy = "*"
 twine = "*"
 "eopkg3p" = {editable = true, path = "."}
+shiv = "*"
 
 [requires]
 python_version = "3.6"
