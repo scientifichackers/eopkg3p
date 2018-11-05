@@ -1,6 +1,6 @@
 from .core import (
-    get_outdated,
-    get_installed,
+    filter_outdated,
+    filter_installed,
     install_eopkg,
     build_pspec,
     get_installed_all,

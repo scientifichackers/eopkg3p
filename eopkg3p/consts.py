@@ -4,7 +4,8 @@ from pathlib import Path
 
 def _excecutable_not_found(name: str):
     exit(
-        f"`{name}` executable not found. Please make sure you have `{name}` installed on your system."
+        f"`{name}` executable not found. "
+        f"Please make sure you have `{name}` installed on your system."
     )
 
 

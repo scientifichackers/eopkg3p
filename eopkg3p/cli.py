@@ -38,7 +38,7 @@ def install(packages, reinstall):
 
     package_set = set(packages)
     if not reinstall:
-        all_installed_set = set(core.get_installed(available))
+        all_installed_set = set(core.filter_installed(available))
         installed_set = package_set.intersection(all_installed_set)
         package_set = package_set - installed_set
 
@@ -52,7 +52,8 @@ def install(packages, reinstall):
                 print(i)
 
     for name in package_set:
-        eopkg = core.build_pspec(available[name])
+        pspec = available[name]
+        eopkg = core.build_pspec(pspec)
         core.install_eopkg(eopkg)
 
 
@@ -67,7 +68,7 @@ def remove(packages):
 def list_available():
     """(la) List all packages available in the local repository."""
     available = core.get_available()
-    installed = core.get_installed(available).keys()
+    installed = core.filter_installed(available).keys()
 
     maxsize = max(map(len, available)) + 1
     des_indent = maxsize + 3
@@ -77,7 +78,7 @@ def list_available():
         head = name.rjust(maxsize)
         if name in installed:
             head = green(head)
-        des = core.get_description(pspec)
+        des = core.extract_description(pspec)
         des = indent(fill(des, des_width), " " * des_indent)
 
         print(head, "-", des[des_indent:])
@@ -87,7 +88,7 @@ def list_available():
 def list_installed():
     """(li) List all 3rd party packages that are currently installed."""
     available = core.get_available()
-    installed = core.get_installed(available)
+    installed = core.filter_installed(available)
 
     maxsize = max(map(len, installed)) + 1
     des_indent = maxsize + 3
@@ -95,7 +96,7 @@ def list_installed():
 
     for name, pspec in installed.items():
         head = name.rjust(maxsize)
-        des = core.get_description(pspec)
+        des = core.extract_description(pspec)
         des = indent(fill(des, des_width), " " * des_indent)
 
         print(head, "-", des[des_indent:])
@@ -128,17 +129,16 @@ def upgrade(ctx: click.Context, packages):
     else:
         packages = available
 
-    packages = core.get_outdated(packages)
-
-    if not packages:
+    outdated = core.filter_outdated(packages)
+    if not outdated:
         print("No packages to upgrade.")
         return
 
     print("The following packages are going to be upgraded:")
-    for i in packages:
+    for i in outdated:
         print(i)
     if click.confirm("Continue?"):
-        for name, pspec in packages.items():
+        for name, pspec in outdated.items():
             eopkg = core.build_pspec(pspec)
             core.install_eopkg(eopkg)
 
