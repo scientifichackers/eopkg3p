@@ -109,12 +109,12 @@ def filter_installed(available: Dict[str, Path]) -> Dict[str, Path]:
 
 def filter_outdated(available: Dict[str, Path]) -> Dict[str, Path]:
     def _():
-        for name, rel in get_installed_all():
+        for name, release in get_installed_all():
             try:
                 pspecfile = available[name]
             except KeyError:
                 continue
-            if extract_latest_release(pspecfile) > rel:
+            if extract_latest_release(pspecfile) > release:
                 yield name, pspecfile
 
     return dict(_())

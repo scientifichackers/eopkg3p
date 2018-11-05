@@ -1,6 +1,8 @@
 import shutil
 import subprocess
+from pathlib import Path
 from textwrap import fill, indent
+from typing import Iterable, Dict
 
 import click
 from crayons import yellow, green, red, cyan
@@ -15,7 +17,15 @@ def update_repo():
     """(ur) Update the local repository"""
     print(f"Updating repository: {green(REPO_URL)}...")
     core.update_local_repo()
-    print("Done!")
+
+
+def parse_package_names(packages: Iterable[str], available: Dict[str, Path]):
+    try:
+        return {name: available[name] for name in map(str.strip, packages)}
+    except KeyError as e:
+        exit(
+            f"{red('Repo item', bold=True)} {cyan(e.args[0])} {red('not found!', bold=True)}"
+        )
 
 
 @click.command()
@@ -29,18 +39,18 @@ def install(packages, reinstall):
 
     available = core.get_available()
     try:
-        packages = {name: available[name] for name in map(str.strip, packages)}
+        packages = parse_package_names(packages, available)
     except KeyError as e:
         print(
             f"{red('Repo item', bold=True)} {cyan(e.args[0])} {red('not found!', bold=True)}"
         )
         return
 
-    package_set = set(packages)
+    to_install_set = set(packages)
     if not reinstall:
         all_installed_set = set(core.filter_installed(available))
-        installed_set = package_set.intersection(all_installed_set)
-        package_set = package_set - installed_set
+        installed_set = to_install_set.intersection(all_installed_set)
+        to_install_set = to_install_set - installed_set
 
         if installed_set:
             print(
@@ -50,8 +60,12 @@ def install(packages, reinstall):
             )
             for i in installed_set:
                 print(i)
-
-    for name in package_set:
+    print("The following packages are going to be installed:")
+    for i in to_install_set:
+        print(cyan(i))
+    if not click.confirm("Continue?", default=True):
+        return
+    for name in to_install_set:
         pspec = available[name]
         eopkg = core.build_pspec(pspec)
         core.install_eopkg(eopkg)
@@ -70,18 +84,18 @@ def list_available():
     available = core.get_available()
     installed = core.filter_installed(available).keys()
 
-    maxsize = max(map(len, available)) + 1
-    des_indent = maxsize + 3
-    des_width = shutil.get_terminal_size().columns - des_indent
+    head_width = max(map(len, available)) + 1
+    descrip_indent = head_width + 3
+    descrip_width = shutil.get_terminal_size().columns - descrip_indent
 
     for name, pspec in available.items():
-        head = name.rjust(maxsize)
+        head = name.rjust(head_width)
         if name in installed:
             head = green(head)
-        des = core.extract_description(pspec)
-        des = indent(fill(des, des_width), " " * des_indent)
+        descrip = core.extract_description(pspec)
+        descrip = indent(fill(descrip, descrip_width), " " * descrip_indent)
 
-        print(head, "-", des[des_indent:])
+        print(head, "-", descrip[descrip_indent:])
 
 
 @click.command()
@@ -90,16 +104,16 @@ def list_installed():
     available = core.get_available()
     installed = core.filter_installed(available)
 
-    maxsize = max(map(len, installed)) + 1
-    des_indent = maxsize + 3
-    des_width = shutil.get_terminal_size().columns - des_indent
+    head_width = max(map(len, installed)) + 1
+    descrip_indent = head_width + 3
+    descrip_width = shutil.get_terminal_size().columns - descrip_indent
 
     for name, pspec in installed.items():
-        head = name.rjust(maxsize)
-        des = core.extract_description(pspec)
-        des = indent(fill(des, des_width), " " * des_indent)
+        head = name.rjust(head_width)
+        descrip = core.extract_description(pspec)
+        descrip = indent(fill(descrip, descrip_width), " " * descrip_indent)
 
-        print(head, "-", des[des_indent:])
+        print(head, "-", descrip[descrip_indent:])
 
 
 @click.command()
@@ -119,13 +133,7 @@ def upgrade(ctx: click.Context, packages):
 
     available = core.get_available()
     if packages:
-        try:
-            packages = {name: available[name] for name in map(str.strip, packages)}
-        except KeyError as e:
-            print(
-                f"{red('Repo item', bold=True)} {cyan(e.args[0])} {red('not found!', bold=True)}"
-            )
-            return
+        packages = parse_package_names(packages, available)
     else:
         packages = available
 
@@ -136,11 +144,13 @@ def upgrade(ctx: click.Context, packages):
 
     print("The following packages are going to be upgraded:")
     for i in outdated:
-        print(i)
-    if click.confirm("Continue?"):
-        for name, pspec in outdated.items():
-            eopkg = core.build_pspec(pspec)
-            core.install_eopkg(eopkg)
+        print(cyan(i))
+    if not click.confirm("Continue?", default=True):
+        return
+
+    for name, pspec in outdated.items():
+        eopkg = core.build_pspec(pspec)
+        core.install_eopkg(eopkg)
 
 
 class AliasedGroup(click.Group):
