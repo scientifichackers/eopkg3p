@@ -31,7 +31,8 @@ def parse_package_names(packages: Iterable[str], available: Dict[str, Path]):
 @click.command()
 @click.argument("packages", nargs=-1)
 @click.option("--reinstall", is_flag=True)
-def install(packages, reinstall):
+@click.option("--yes", "-y", help="Don't ask for confirmation.", is_flag=True)
+def install(packages, reinstall, yes):
     """(it) Install packages"""
     if not packages:
         print("Nothing to do...")
@@ -63,8 +64,10 @@ def install(packages, reinstall):
     print("The following packages are going to be installed:")
     for i in to_install_set:
         print(cyan(i))
-    if not click.confirm("Continue?", default=True):
+
+    if not (yes or click.confirm("Continue?", default=True)):
         return
+
     for name in to_install_set:
         pspec = available[name]
         eopkg = core.build_pspec(pspec)
@@ -126,8 +129,9 @@ def delete_cache():
 
 @click.command()
 @click.argument("packages", nargs=-1)
+@click.option("--yes", "-y", help="Don't ask for confirmation.", is_flag=True)
 @click.pass_context
-def upgrade(ctx: click.Context, packages):
+def upgrade(ctx: click.Context, packages, yes):
     """(up) Upgrade 3rd party packages"""
     ctx.invoke(update_repo)
 
@@ -145,7 +149,8 @@ def upgrade(ctx: click.Context, packages):
     print("The following packages are going to be upgraded:")
     for i in outdated:
         print(cyan(i))
-    if not click.confirm("Continue?", default=True):
+
+    if not (yes or click.confirm("Continue?", default=True)):
         return
 
     for name, pspec in outdated.items():
