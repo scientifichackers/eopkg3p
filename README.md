@@ -64,4 +64,49 @@ This package elimitates that problem.
 
 ---
 
+## API
+`eopkg3p` has a Python API as a bonus and can be imported like so:
+`import eopkg3p`
+
+
+### build_pspec(*file*)
+Build eopkg package of a 3rd party app based on the app's pspec file from the `file` argument.
+
+&nbsp;
+### check\_local_repo()
+Check that the local repository directory (`$HOME/.cache/eopkg3p/3rd-party`) exists and that it's not empty.
+
+&nbsp;
+### extract_description(*file*)
+Return the description of a 3rd party app as a string based on the app's pspec file from the `file` argument.
+
+&nbsp;
+### extract\_latest_release(*file*)
+Return the release number of a 3rd party app as an integer based on the app's pspec file from the `file` argument.
+
+&nbsp;
+### filter_installed(*available*)
+Return a dict object with only the installed 3rd party apps.
+
+&nbsp;
+### filter_outdated(*available*)
+Return a dict with only the outdated 3rd party apps.
+
+&nbsp;
+### get_available()
+Return a `dict` with the available 3rd party apps and the POSIX-path to their pspec.xml file.
+
+&nbsp;
+### get\_installed_all()
+Return all installed apps and their release number as a generator object.
+
+&nbsp;
+### install_eopkg(*file*)
+Install eopkgfile from `file` with eopkg.
+
+&nbsp;
+### update\_local_repo()
+Install eopkgfile from `file` with eopkg based on the pspec file.
+
+
 [🐍🏕](http://www.pycampers.com/)

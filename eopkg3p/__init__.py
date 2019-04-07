@@ -8,4 +8,5 @@ from .core import (
     build_pspec,
     get_installed_all,
     check_local_repo,
+    update_local_repo
 )
