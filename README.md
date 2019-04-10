@@ -69,7 +69,7 @@ This package elimitates that problem.
 `import eopkg3p`
 
 
-#### `build_pspec(*pspecfile: Path*)`
+#### `build_pspec(pspecfile: Path)`
 Build eopkg package of a 3rd party app based on the app's pspec file from the `Path` object in the `pspecfile` argument.
 `pspecfile` has to be a `Path` object.
 
@@ -78,11 +78,11 @@ Build eopkg package of a 3rd party app based on the app's pspec file from the `P
 Check that the local repository directory (`$HOME/.cache/eopkg3p/3rd-party`) exists and that it's not empty.
 
 &nbsp;
-#### `extract_description(*pspecfile: Path*)`
+#### `extract_description(pspecfile: Path)`
 Return the description of a 3rd party app as a string based on the app's pspec file from the `Path` object in the `pspecfile` argument.
 
 &nbsp;
-#### `extract_latest_release(*pspecfile: Path*)`
+#### `extract_latest_release(pspecfile: Path)`
 Return the release number of a 3rd party app as an integer based on the app's pspec file from the `Path` object in the `pspecfile` argument.
 
 &nbsp;
@@ -90,7 +90,7 @@ Return the release number of a 3rd party app as an integer based on the app's ps
 If given the argument `available` as a `dict` object with string as first argument and a `Path` object as the second argument, the function will return a dict object with only the installed 3rd party apps.
 
 &nbsp;
-#### `filter_outdated(*available: Dict[str, Path]) -> Dict[str, Path]*)`
+#### `filter_outdated(available: Dict[str, Path]) -> Dict[str, Path])`
 If given the argument `available` as a `dict` object with string as first argument and a `Path` object as the second argument, the function will return a dict object with only the outdated 3rd party apps.
 
 &nbsp;
@@ -102,7 +102,7 @@ Return a `dict` with the name of the available 3rd party apps as a string as the
 Return all installed apps and their release number as a generator object.
 
 &nbsp;
-#### `install_eopkg(*eopkgfile: Path*)`
+#### `install_eopkg(eopkgfile: Path)`
 Install eopkgfile with `eopkg` based on the app's pspec file from the `Path` object in the `pspecfile` argument.
 
 &nbsp;
