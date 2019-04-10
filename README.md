@@ -86,7 +86,7 @@ Return the description of a 3rd party app as a string based on the app's pspec f
 Return the release number of a 3rd party app as an integer based on the app's pspec file from the `Path` object in the `pspecfile` argument.
 
 &nbsp;
-#### `filter_installed(*available: Dict[str, Path]) -> Dict[str, Path]*`
+#### `filter_installed(available: Dict[str, Path]) -> Dict[str, Path]*`
 If given the argument `available` as a `dict` object with string as first argument and a `Path` object as the second argument, the function will return a dict object with only the installed 3rd party apps.
 
 &nbsp;
